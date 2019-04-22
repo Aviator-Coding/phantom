@@ -18,6 +18,6 @@ RUN go build -o /go/bin/phantom
 ############################
 FROM alpine:edge
 # Copy our static executable.
-COPY --from=builder /go/bin/phantom /go/bin/phantom
+COPY --from=builder /go/bin/phantom /usr/local/bin/
 #Run the Phantom Binary
-ENTRYPOINT ["/go/bin/phantom","-magicbytes=E4D2411C","-port=1929", "-protocol_number=70209", "-magic_message=ProtonCoin Signed Message:", "-bootstrap_ips=51.15.236.48:1929", "-bootstrap_url=http://explorer.anodoscrypto.com:3001", "-max_connections=10"]
+ENTRYPOINT ["/usr/local/bin/phantom","-magicbytes=E4D2411C","-port=1929", "-protocol_number=70209", "-magic_message=ProtonCoin Signed Message:", "-bootstrap_ips=51.15.236.48:1929", "-bootstrap_url=http://explorer.anodoscrypto.com:3001", "-max_connections=10"]
