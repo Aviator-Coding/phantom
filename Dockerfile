@@ -17,6 +17,8 @@ RUN go build -o /go/bin/phantom
 # STEP 2 build a small image
 ############################
 FROM alpine:edge
+# Install SSL Certs
+RUN apk add --no-cache ca-certificates
 # Copy our static executable.
 COPY --from=builder /go/bin/phantom /usr/local/bin/
 #Run the Phantom Binary
