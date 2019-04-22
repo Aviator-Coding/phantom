@@ -18,8 +18,8 @@ RUN go build -o /go/bin/phantom
 ############################
 FROM alpine:edge
 # Install SSL Certs
-RUN apk add --no-cache ca-certificates && \
-    mkdir /masternodes
+RUN apk add --no-cache ca-certificates 
+WORKDIR /masternodes
 # Copy our static executable.
 COPY --from=builder /go/bin/phantom /usr/local/bin/
 #Run the Phantom Binary
