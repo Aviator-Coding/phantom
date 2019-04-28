@@ -5,7 +5,9 @@ FROM golang:alpine AS builder
 # Install git.
 # Git is required for fetching the dependencies.
 RUN apk update && apk add --no-cache git 
+#Change the Working Directory
 WORKDIR $GOPATH/src/phantom/
+#Clone Github Repo
 RUN  git clone https://github.com/breakcrypto/phantom.git .
 # Fetch dependencies.
 # Using go get.
@@ -18,9 +20,11 @@ RUN go build -o /go/bin/phantom
 ############################
 FROM alpine:edge
 # Install SSL Certs
-RUN apk add --no-cache ca-certificates 
-WORKDIR /masternodes
+RUN apk add --no-cache ca-certificates \
 # Copy our static executable.
 COPY --from=builder /go/bin/phantom /usr/local/bin/
+# Change Working dir
+WORKDIR /phantom
+VOLUME ["/phantom/coin_config", "/var/phantom/masternode_config"]
 #Run the Phantom Binary
-ENTRYPOINT ["/usr/local/bin/phantom","-magicbytes=E4D2411C","-port=1929", "-protocol_number=70209", "-magic_message=ProtonCoin Signed Message:", "-bootstrap_ips=51.15.236.48:1929", "-bootstrap_url=http://explorer.anodoscrypto.com:3001", "-max_connections=10"]
+ENTRYPOINT ["/usr/local/bin/phantom","-coin_conf=/phantom/coin_config/coin.conf","-masternode_conf=/phantom/masternode_config/masternode.conf"]
