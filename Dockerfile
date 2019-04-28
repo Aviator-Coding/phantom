@@ -25,6 +25,6 @@ RUN apk add --no-cache ca-certificates \
 COPY --from=builder /go/bin/phantom /usr/local/bin/
 # Change Working dir
 WORKDIR /phantom
-VOLUME ["/phantom/coin_config", "/var/phantom/masternode_config"]
+VOLUME ["/phantom/coin_config", "/phantom/masternode_config"]
 #Run the Phantom Binary
 ENTRYPOINT ["/usr/local/bin/phantom","-coin_conf=/phantom/coin_config/coin.conf","-masternode_conf=/phantom/masternode_config/masternode.conf"]
