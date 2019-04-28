@@ -8,7 +8,8 @@ RUN apk update && apk add --no-cache git
 #Change the Working Directory
 WORKDIR $GOPATH/src/phantom/
 #Clone Github Repo
-RUN  git clone https://github.com/breakcrypto/phantom.git .
+RUN  git clone https://github.com/breakcrypto/phantom.git . &&\
+     cd cmd
 # Fetch dependencies.
 # Using go get.
 RUN go get -d -v
