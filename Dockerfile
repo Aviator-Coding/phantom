@@ -11,17 +11,18 @@ WORKDIR $GOPATH/src/phantom/
 RUN  git clone https://github.com/breakcrypto/phantom.git . &&\
      cd cmd
 # Fetch dependencies.
-# Using go get.
-RUN go get -d -v
-# Build the binary.
-RUN go build -o /go/bin/phantom
-
+# And Compile Binary
+RUN cd cmd/phantom &&\
+    go get -d -v ./... &&\
+    go install -v ./... &&\
+    go build -o /go/bin/phantom
+    
 ############################
 # STEP 2 build a small image
 ############################
 FROM alpine:edge
 # Install SSL Certs
-RUN apk add --no-cache ca-certificates \
+RUN apk add --no-cache ca-certificates
 # Copy our static executable.
 COPY --from=builder /go/bin/phantom /usr/local/bin/
 # Change Working dir
