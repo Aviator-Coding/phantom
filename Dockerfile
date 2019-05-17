@@ -9,6 +9,7 @@ RUN apk update && apk add --no-cache git
 WORKDIR $GOPATH/src/phantom/
 #Clone Github Repo
 RUN  git clone https://github.com/breakcrypto/phantom.git . &&\
+     git checkout -b pivx &&\
      cd cmd
 # Fetch dependencies.
 # And Compile Binary
